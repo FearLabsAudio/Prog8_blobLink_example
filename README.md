@@ -11,7 +11,7 @@ Then the utility replaces the symbols in the template with the actual addresses.
 The example makefile shows how the main program, link step and blob can all be built in one make command.
 
 
-Usage: gameLinker <template-file> <monlist-file> <output-file>
+Usage: gameLinker template-file monlist-file output-file
 
 
 

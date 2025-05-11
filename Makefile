@@ -1,15 +1,18 @@
 # Dependencies: prog8 compiler, x16emu, make, java, mtools (all in PATH)
 
-mainSRC      = 	linkDemo.p8
-outfile      =  linkDemo.prg
+mainSRC      	=  linkDemo.p8
+outfile      	=  linkDemo.prg
 
-blobSRC      =  blob.p8
-outfile_blob =  blob.bin
+blobSRC      	=  blob.p8
+outfile_blob 	=  blob.bin
 
-linkerSRC    =  gameLinker.cpp
-linkerAPP    =  gameLinker.exe
+linkerSRC    	=  gameLinker.cpp
+linkerAPP    	=  gameLinker.exe
+linkerTemplate	=  gameLink_template.p8
+linkerMonList   =  linkDemo.vice-mon-list
+linkerOutput    =  gameLink.p8
 
-prog8c   =  prog8c-11.3.1-all.jar
+prog8c   =  prog8c-11.3.2-all.jar
 
 all: $(outfile) $(linkerAPP)  $(outfile_blob) 
 
@@ -27,7 +30,7 @@ $(linkerAPP): $(linkerSRC)
 
 #blob
 $(outfile_blob): $(linkerAPP) $(blobSRC) $(prog8c)
-	./gameLinker.exe
+	./gameLinker.exe $(linkerTemplate) $(linkerMonList) $(linkerOutput)
 	java -jar $(prog8c) -target cx16 $(blobSRC) -asmlist 
 
 clean:

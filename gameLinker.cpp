@@ -1,3 +1,5 @@
+//to build: g++ -o gameLinker.exe gameLinker.cpp
+
 // INCLUDES ///////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <vector>
@@ -8,17 +10,20 @@
 #include <algorithm>
 #include <sys/stat.h>
 #include <sstream>
+#include <cstdlib>
 
 // NAMESPACE ////////////////////////////////////////////////////////////////////
 namespace fs = std::filesystem;
 using namespace std;
 
-
+// TYPEDEFS /////////////////////////////////////////////////////////////////////
 typedef struct {
     std::string address;
     std::string symbol;
 } symbolDef;
 
+// DEFINES //////////////////////////////////////////////////////////////////////
+#define ENDLINE      "\n***********************************************************\n\n"
 
 // PROTOTYPES ///////////////////////////////////////////////////////////////////
 void failOut (string msg);
@@ -28,21 +33,31 @@ std::string replaceVar(const std::string& line, std::size_t n);
 std::string replaceExtsub(const std::string& line, std::size_t start, std::size_t end); 
 static std::string trim(const std::string& s);
 
-//to build: g++ -o gameLinker.exe gameLinker.cpp
-
-#define TEMPLATEFILE  "gameLink_template.p8"
-#define MONLISTFILE   "linkDemo.vice-mon-list"
-#define OUTFILE       "gameLink.p8"
-
-
+// GLOBALS /////////////////////////////////////////////////////////////////////
+std::string TEMPLATEFILE;
+std::string MONLISTFILE;
+std::string OUTFILE;
 std::vector<symbolDef> symbolList;
 
 int main(int argc, char *argv[]) 
 {
     cout << "\n\n***********************************************************\nFEARlabs Prog8 GameLinker Utility\n\n";
+    if (argc != 4) 
+    {
+        std::cerr
+            << "gameLinker: Invalid parameters\n"
+            << "Usage: gameLinker <template-file> <monlist-file> <output-file>\n" << ENDLINE;
+        return EXIT_FAILURE;
+    }
+
+    // assign in the order TEMPLATEFILE MONLISTFILE OUTFILE
+    TEMPLATEFILE   = argv[1];
+    MONLISTFILE    = argv[2];
+    OUTFILE        = argv[3];
+    
 
     //delete the output files
-    remove(OUTFILE);
+    filesystem::remove(OUTFILE);
 
 
     //open the vice-mon-list file
@@ -63,11 +78,6 @@ int main(int argc, char *argv[])
         }
     }
     std::cout << "Collected " << symbolList.size() << " entries:\n\n";
-    // for (auto &e : symbolList) {
-    //     std::cout << "  address = " << e.address
-    //               << ", symbol = " << e.symbol << "\n";
-    // }
-
 
     //open the template file
     cout << "Open: " << TEMPLATEFILE << "\n";
@@ -87,9 +97,9 @@ int main(int argc, char *argv[])
         outputStream << scanTemplateLine(line) << "\n";
     }
 
-    cout << "\n...DONE writing " << OUTFILE << "\n***********************************************************\n\n";
+    cout << "\n...DONE writing " << OUTFILE << ENDLINE;
 
-
+    return EXIT_SUCCESS;
 }
 
 bool parseViceMonListLine(const std::string& line, symbolDef &out) 
@@ -214,6 +224,6 @@ static std::string trim(const std::string& s)
 
 void failOut (string msg)
 {
-    cout << "\n*** ERROR! ***: " << msg << "\n\n";
-    exit(0);
+    cout << "\n*** ERROR! ***: " << msg << "\n" << ENDLINE;
+    exit(EXIT_FAILURE);
 }

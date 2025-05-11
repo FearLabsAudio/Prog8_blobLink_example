@@ -1,0 +1,19 @@
+al a000 .prog8_program_start
+al a03b .p8b_gameLink
+al a003 .p8b_main
+al a027 .p8b_main:p8s_printAllNumbers_reversed
+al a06d .p8b_main:p8s_printAllNumbers_reversed:p8v_i
+al a00e .p8b_main:p8s_printAllNumbers
+al a06c .p8b_main:p8s_printAllNumbers:p8v_i
+al a009 .p8b_main:p8s_start
+al a03b .prog8_lib
+al a04d .prog8_lib:memset
+al a057 .prog8_lib:memset:_fullpage
+al a061 .prog8_lib:memset:_lastpage
+al a03b .prog8_lib:program_startup_clear_bss
+al a06b .prog8_lib:orig_stackpointer
+al a06c .prog8_bss_section_start
+al a06e .prog8_program_end
+; breakpoint list now follows
+; 0 breakpoints have been defined
+del

@@ -1,0 +1,45 @@
+al 8c9 .conv
+al 9e2 .conv:string_out
+al 900 .conv:internal_ubyte2decimal
+al 8c9 .conv:str_ub
+al 8fb .conv:str_ub:_done
+al 869 .p8_sys_startup
+al 881 .p8_sys_startup:cleanup_at_exit
+al 9de .p8_sys_startup:cleanup_at_exit:_exitcarry
+al 9df .p8_sys_startup:cleanup_at_exit:_exitcode
+al 9e0 .p8_sys_startup:cleanup_at_exit:_exitcodeX
+al 9e1 .p8_sys_startup:cleanup_at_exit:_exitcodeY
+al 869 .p8_sys_startup:init_system_phase2
+al 9f2 .prog8_program_end
+al 8b0 .cbm
+al 8b0 .sys
+al 8b0 .sys:restore_irq
+al 9db .sys:restore_irq:_orig_irqvec
+al 9ab .prog8_lib
+al 9bd .prog8_lib:memset
+al 9c7 .prog8_lib:memset:_fullpage
+al 9d1 .prog8_lib:memset:_lastpage
+al 9ab .prog8_lib:program_startup_clear_bss
+al 9dd .prog8_lib:orig_stackpointer
+al 801 .prog8_program_start
+al 9de .prog8_bss_section_start
+al 89f .txt
+al 89f .txt:print
+al 817 .prog8_entrypoint
+al 825 .p8b_main
+al 85c .p8b_main:p8s_printNumber
+al 825 .p8b_main:p8v_someNumbers
+al 833 .p8b_main:p8s_start
+al 8b0 .cx16
+al 912 .diskio
+al 929 .diskio:internal_load_routine
+al 971 .diskio:prog8_init_vars
+al 912 .diskio:load_raw
+al 984 .p8b_blob
+al 984 .p8b_blob:p8v_FILENAME_BLOB
+al 98d .p8b_blob:p8s_load
+al 976 .strings
+al 976 .strings:length
+; breakpoint list now follows
+; 0 breakpoints have been defined
+del

@@ -1,0 +1,6 @@
+.cache/
+.vscode/
+.metadata/
+*.asm
+*.list
+*.exe

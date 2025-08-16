@@ -125,35 +125,31 @@ bool parseViceMonListLine(const std::string& line, symbolDef &out)
 
 std::string scanTemplateLine(const std::string& line) 
 {
-    // 1) skip leading spaces
-    std::size_t pos = line.find_first_not_of(' ');
-    if (pos == std::string::npos) return line;   // empty or all spaces
+    // skip leading whitespace (spaces, tabs, etc.)
+    std::size_t pos = line.find_first_not_of(" \t\r\n\f\v");
+    if (pos == std::string::npos) return line;
 
-    // 2) if first non-space is '&'
+    // if first non-ws is '&'
     if (line[pos] == '&') {
-        // find the '=' after it
         std::size_t eq = line.find('=', pos + 1);
         if (eq != std::string::npos && eq + 1 < line.size()) {
-            // call replaceVar with the index of the first char after '='
             return replaceVar(line, eq + 1);
         }
     }
 
-    // 3) otherwise check for the literal "extsub"
+    // otherwise check for "extsub"
     constexpr char keyword[] = "extsub";
-    constexpr std::size_t kwlen = sizeof(keyword) - 1; // 6
-    if (line.size() >= pos + kwlen && line.compare(pos, kwlen, keyword) == 0)
-    {
-        // find '=' after "extsub"
+    constexpr std::size_t kwlen = sizeof(keyword) - 1;
+    if (line.size() >= pos + kwlen && line.compare(pos, kwlen, keyword) == 0) {
         std::size_t eq = line.find('=', pos + kwlen);
-        if (eq != std::string::npos) {
-            // start of var name is pos+kwlen, end is eq
-            return replaceExtsub(line, pos + kwlen, eq - 1);
+        if (eq != std::string::npos && eq > pos + kwlen) {
+            return replaceExtsub(line, pos + kwlen, eq - 1); // end is char before '='
         }
     }
+
     return line;
-    
 }
+
 
 std::string replaceVar(const std::string& line, std::size_t n) 
 {
